@@ -26,7 +26,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	strategy := strategy.Recursive{}
+	strategy := strategy.Dijkstra{}
 	solver := solver.New(dungeonMap, &strategy)
 	minHP, bestRoute, err := solver.Solve()
 	if err != nil {
