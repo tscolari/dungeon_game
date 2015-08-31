@@ -28,10 +28,28 @@ var _ = Describe("Integration", func() {
 	})
 
 	It("doesn't fail to run", func() {
-		cmd := exec.Command(cli, "-dungeon", "../dungeon/fixtures/valid_dungeon.yml")
+		cmd := exec.Command(cli, "-dungeon", "./fixtures/dungeon.yml")
 
 		err := cmd.Run()
 		Expect(err).ToNot(HaveOccurred())
+	})
+
+	It("gives the correct directions", func() {
+		cmd := exec.Command(cli, "-dungeon", "./fixtures/dungeon.yml")
+
+		output, err := cmd.Output()
+		Expect(err).ToNot(HaveOccurred())
+
+		Expect(string(output)).To(MatchRegexp("BEST ROUTE: RIGHT -> DOWN -> DOWN -> RIGHT -> RIGHT"))
+	})
+
+	It("gives the correct life points needed", func() {
+		cmd := exec.Command(cli, "-dungeon", "./fixtures/dungeon.yml")
+
+		output, err := cmd.Output()
+		Expect(err).ToNot(HaveOccurred())
+
+		Expect(string(output)).To(MatchRegexp("MIN HP: 4"))
 	})
 
 })
