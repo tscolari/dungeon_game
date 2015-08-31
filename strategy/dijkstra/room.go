@@ -1,11 +1,11 @@
 package dijkstra
 
 type Room struct {
-	X       int
-	Y       int
-	MinHP   int
-	TotalHP int
-	Prev    []int
+	X         int
+	Y         int
+	MinDamage int
+	TotalHP   int
+	Prev      []int
 }
 
 func NewRoom(x, y int) Room {

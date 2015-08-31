@@ -8,11 +8,10 @@ type Solver struct {
 }
 
 type Strategy interface {
-	FindBestRoute(dungeon.Dungeon) (minHP int, bestRoute []string, err error)
+	FindBestRoute(dungeon.Dungeon) (minDamage int, bestRoute []string, err error)
 }
 
 func New(dungeon dungeon.Dungeon, strategy Strategy) *Solver {
-
 	return &Solver{
 		dungeon:  dungeon,
 		strategy: strategy,
@@ -20,11 +19,11 @@ func New(dungeon dungeon.Dungeon, strategy Strategy) *Solver {
 }
 
 func (s *Solver) Solve() (int, []string, error) {
-	minHP, route, err := s.strategy.FindBestRoute(s.dungeon)
+	minDamage, route, err := s.strategy.FindBestRoute(s.dungeon)
 	if err != nil {
 		return 0, []string{}, err
 	}
 
-	minHP = 1 - minHP
+	minHP := 1 - minDamage
 	return minHP, route, nil
 }

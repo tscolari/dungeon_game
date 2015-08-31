@@ -17,15 +17,15 @@ type RouteFinder struct {
 	dungeon dungeon.Dungeon
 }
 
-func (f *RouteFinder) FindRoute(startX, startY, endX, endY int) (minHP int, routes []string, err error) {
+func (f *RouteFinder) FindRoute(startX, startY, endX, endY int) (minDamange int, routes []string, err error) {
 	room := NewRoom(startX, startY)
-	room.MinHP = f.dungeon.Rooms[startY][startX]
+	room.MinDamage = f.dungeon.Rooms[startY][startX]
 	room.TotalHP = f.dungeon.Rooms[startY][startX]
 	room.Prev = nil
 	roomsSet := f.initializeRoomsSetFor(room)
 
 	for roomsSet.UnvisitedLen() > 0 {
-		room := roomsSet.MaxMinHPRoom()
+		room := roomsSet.MaxMinDamageRoom()
 		roomsSet.Visit(room.X, room.Y)
 
 		if room.X == endX && room.Y == endY {
@@ -34,12 +34,12 @@ func (f *RouteFinder) FindRoute(startX, startY, endX, endY int) (minHP int, rout
 
 		for _, neighbor := range f.neighborsOf(room) {
 			totalHP := room.TotalHP + f.dungeon.Rooms[neighbor[1]][neighbor[0]]
-			minHP := min(room.MinHP, totalHP)
+			minDamange := min(room.MinDamage, totalHP)
 
 			neighborRoom, _ := roomsSet.Get(neighbor[0], neighbor[1])
-			if (minHP > neighborRoom.MinHP) || (minHP == neighborRoom.MinHP && totalHP > neighborRoom.TotalHP) {
+			if (minDamange > neighborRoom.MinDamage) || (minDamange == neighborRoom.MinDamage && totalHP > neighborRoom.TotalHP) {
 
-				neighborRoom.MinHP = minHP
+				neighborRoom.MinDamage = minDamange
 				neighborRoom.TotalHP = totalHP
 				neighborRoom.Prev = []int{room.X, room.Y}
 
@@ -60,7 +60,7 @@ func (f *RouteFinder) initializeRoomsSetFor(room Room) Rooms {
 				continue
 			}
 			room := NewRoom(x, y)
-			room.MinHP = math.MinInt32
+			room.MinDamage = math.MinInt32
 			room.TotalHP = 0
 			room.Prev = nil
 			roomsSet.SaveRoom(room)
@@ -108,5 +108,5 @@ func (f *RouteFinder) findShortestPathFrom(x, y int, roomsSet Rooms) (int, []str
 	direction := prevDirection(target, previous)
 	routes = append([]string{direction}, routes...)
 
-	return room.MinHP, routes, nil
+	return room.MinDamage, routes, nil
 }

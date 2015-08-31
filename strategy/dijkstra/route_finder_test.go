@@ -32,10 +32,10 @@ var _ = Describe("RouteFinder", func() {
 				Expect(path).To(Equal([]string{"RIGHT", "DOWN", "DOWN", "RIGHT", "RIGHT"}))
 			})
 
-			It("returns the correct minHP for the path", func() {
-				minHP, _, err := finder.FindRoute(0, 0, 3, 2)
+			It("returns the correct minDamange for the path", func() {
+				minDamange, _, err := finder.FindRoute(0, 0, 3, 2)
 				Expect(err).ToNot(HaveOccurred())
-				Expect(minHP).To(Equal(-3))
+				Expect(minDamange).To(Equal(-3))
 			})
 		})
 
@@ -46,10 +46,10 @@ var _ = Describe("RouteFinder", func() {
 				Expect(path).To(Equal([]string{"DOWN", "RIGHT", "RIGHT"}))
 			})
 
-			It("returns the correct minHP for the path", func() {
-				minHP, _, err := finder.FindRoute(1, 1, 3, 2)
+			It("returns the correct minDamange for the path", func() {
+				minDamange, _, err := finder.FindRoute(1, 1, 3, 2)
 				Expect(err).ToNot(HaveOccurred())
-				Expect(minHP).To(Equal(-6))
+				Expect(minDamange).To(Equal(-6))
 			})
 		})
 
@@ -60,10 +60,10 @@ var _ = Describe("RouteFinder", func() {
 				Expect(path).To(Equal([]string{"RIGHT", "RIGHT", "RIGHT"}))
 			})
 
-			It("returns the correct minHP for the path", func() {
-				minHP, _, err := finder.FindRoute(0, 0, 3, 0)
+			It("returns the correct minDamange for the path", func() {
+				minDamange, _, err := finder.FindRoute(0, 0, 3, 0)
 				Expect(err).ToNot(HaveOccurred())
-				Expect(minHP).To(Equal(-6))
+				Expect(minDamange).To(Equal(-6))
 			})
 		})
 
@@ -74,10 +74,10 @@ var _ = Describe("RouteFinder", func() {
 				Expect(path).To(Equal([]string{"DOWN", "DOWN"}))
 			})
 
-			It("returns the correct minHP for the path", func() {
-				minHP, _, err := finder.FindRoute(0, 0, 0, 2)
+			It("returns the correct minDamange for the path", func() {
+				minDamange, _, err := finder.FindRoute(0, 0, 0, 2)
 				Expect(err).ToNot(HaveOccurred())
-				Expect(minHP).To(Equal(-4))
+				Expect(minDamange).To(Equal(-4))
 			})
 		})
 	})

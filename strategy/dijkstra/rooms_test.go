@@ -14,27 +14,27 @@ var _ = Describe("Rooms", func() {
 	BeforeEach(func() {
 		rooms = dijkstra.NewRooms()
 
-		room1 = dijkstra.Room{X: 1, Y: 2, MinHP: -1000}
-		room2 = dijkstra.Room{X: 2, Y: 1, MinHP: 100}
-		room3 = dijkstra.Room{X: 0, Y: 0, MinHP: 0}
+		room1 = dijkstra.Room{X: 1, Y: 2, MinDamage: -1000}
+		room2 = dijkstra.Room{X: 2, Y: 1, MinDamage: 100}
+		room3 = dijkstra.Room{X: 0, Y: 0, MinDamage: 0}
 		rooms.SaveRoom(room1)
 		rooms.SaveRoom(room2)
 		rooms.SaveRoom(room3)
 	})
 
-	Describe("#MaxMinHPRoom", func() {
-		It("returns the index of the Room with the highest `MinHP`", func() {
-			maxMinHPRoom := rooms.MaxMinHPRoom()
-			Expect(maxMinHPRoom).To(Equal(room2))
+	Describe("#MaxMinDamageRoom", func() {
+		It("returns the index of the Room with the highest `MinDamage`", func() {
+			maxMinDamageRoom := rooms.MaxMinDamageRoom()
+			Expect(maxMinDamageRoom).To(Equal(room2))
 		})
 
 		Context("visited rooms", func() {
 			It("ignores visited rooms", func() {
-				room := dijkstra.Room{X: 10, Y: 10, MinHP: 1000}
+				room := dijkstra.Room{X: 10, Y: 10, MinDamage: 1000}
 				rooms.SaveRoom(room)
 				rooms.Visit(10, 10)
-				maxMinHPRoom := rooms.MaxMinHPRoom()
-				Expect(maxMinHPRoom).ToNot(Equal(room))
+				maxMinDamageRoom := rooms.MaxMinDamageRoom()
+				Expect(maxMinDamageRoom).ToNot(Equal(room))
 			})
 		})
 	})
@@ -72,7 +72,7 @@ var _ = Describe("Rooms", func() {
 
 	Describe("#SaveRoom", func() {
 		It("adds the given room", func() {
-			newRoom := dijkstra.Room{X: 5, Y: 5, MinHP: 10}
+			newRoom := dijkstra.Room{X: 5, Y: 5, MinDamage: 10}
 			_, err := rooms.Get(5, 5)
 			Expect(err).To(MatchError("Room not found"))
 
@@ -84,16 +84,16 @@ var _ = Describe("Rooms", func() {
 
 		Context("when a room with same X,Y already exists", func() {
 			It("updates the room object with the new values", func() {
-				oldRoom := dijkstra.Room{X: 5, Y: 5, MinHP: 10}
+				oldRoom := dijkstra.Room{X: 5, Y: 5, MinDamage: 10}
 				rooms.SaveRoom(oldRoom)
 
-				newRoom := dijkstra.Room{X: 5, Y: 5, MinHP: 100}
+				newRoom := dijkstra.Room{X: 5, Y: 5, MinDamage: 100}
 				rooms.SaveRoom(newRoom)
 
 				room, err := rooms.Get(5, 5)
 				Expect(err).ToNot(HaveOccurred())
 
-				Expect(room.MinHP).To(Equal(100))
+				Expect(room.MinDamage).To(Equal(100))
 			})
 		})
 	})

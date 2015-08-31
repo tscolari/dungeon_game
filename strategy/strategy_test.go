@@ -13,9 +13,9 @@ func testStrategy(strategy solver.Strategy) {
 	var _ = Context(fmt.Sprintf("Behaves like a strategy (%T)", strategy), func() {
 
 		type testSample struct {
-			dungeon   dungeon.Dungeon
-			minHP     int
-			bestRoute []string
+			dungeon    dungeon.Dungeon
+			minDamange int
+			bestRoute  []string
 		}
 
 		testSamples := []testSample{
@@ -27,8 +27,8 @@ func testStrategy(strategy solver.Strategy) {
 						[]int{10, 30, -5},
 					},
 				},
-				minHP:     -6,
-				bestRoute: []string{"RIGHT", "RIGHT", "DOWN", "DOWN"},
+				minDamange: -6,
+				bestRoute:  []string{"RIGHT", "RIGHT", "DOWN", "DOWN"},
 			},
 			testSample{
 				dungeon: dungeon.Dungeon{
@@ -38,8 +38,8 @@ func testStrategy(strategy solver.Strategy) {
 						[]int{9, 10, 11, 12},
 					},
 				},
-				minHP:     -3,
-				bestRoute: []string{"RIGHT", "DOWN", "DOWN", "RIGHT", "RIGHT"},
+				minDamange: -3,
+				bestRoute:  []string{"RIGHT", "DOWN", "DOWN", "RIGHT", "RIGHT"},
 			},
 		}
 
@@ -57,7 +57,7 @@ func testStrategy(strategy solver.Strategy) {
 					It("returns the correct minimum HP needed for the best route", func() {
 						hp, _, err := strategy.FindBestRoute(sample.dungeon)
 						Expect(err).ToNot(HaveOccurred())
-						Expect(hp).To(Equal(sample.minHP))
+						Expect(hp).To(Equal(sample.minDamange))
 					})
 				})
 			})

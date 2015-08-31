@@ -44,17 +44,17 @@ func (r *Rooms) Get(x, y int) (Room, error) {
 	return room, nil
 }
 
-func (r Rooms) MaxMinHPRoom() (maxMinHPRoom Room) {
-	maxMinHP := math.MinInt32
+func (r Rooms) MaxMinDamageRoom() (maxMinDamageRoom Room) {
+	maxMinDamage := math.MinInt32
 
 	for _, room := range r.unvisitedRooms {
-		if room.MinHP >= maxMinHP {
-			maxMinHP = room.MinHP
-			maxMinHPRoom = room
+		if room.MinDamage >= maxMinDamage {
+			maxMinDamage = room.MinDamage
+			maxMinDamageRoom = room
 		}
 	}
 
-	return maxMinHPRoom
+	return maxMinDamageRoom
 }
 
 func (r *Rooms) Visit(x, y int) error {
